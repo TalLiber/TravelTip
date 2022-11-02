@@ -1,7 +1,8 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    goToUserLocation
 }
 
 
@@ -19,16 +20,16 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     zoom: 15
                 })
             console.log('Map!', gMap)
+            google.maps.event.addListener(gMap, 'click', (event) => onMapClick(gMap, event.latLng))
         })
 }
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
         position: loc,
-        map: gMap,
         title: 'Hello World!'
     })
-    return marker
+    marker.setMap(gMap)
 }
 
 function panTo(lat, lng) {
@@ -36,6 +37,11 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 }
 
+function goToUserLocation(coords) {
+    gMap.setCenter(new google.maps.LatLng(coords.latitude, coords.longitude))
+    console.log(coords);
+    addMarker(coords)
+}
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()

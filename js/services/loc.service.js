@@ -2,14 +2,15 @@ import { storageService } from './storage.service.js'
 
 export const locService = {
     getLocs,
-    setLocation
+    setLocation,
+    removeLocation
 }
 
 const KEY = 'travelTipDB'
 
 var gLocs = storageService.load(KEY) || [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
+    { id: '123', name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
+    { id: '234', name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
 
 function setLocation(name, lat, lng, createdAt) {
@@ -21,6 +22,12 @@ function setLocation(name, lat, lng, createdAt) {
         createdAt
     })
 
+    storageService.save(KEY, gLocs)
+}
+
+function removeLocation(id) {
+    const currLocIdx = gLocs.findIndex(loc => loc.id === id)
+    gLocs.splice(currLocIdx, 1)
     storageService.save(KEY, gLocs)
 }
 
