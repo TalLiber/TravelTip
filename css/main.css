@@ -1,0 +1,35 @@
+body{
+    margin: 0;
+}
+
+/* Helpers */
+
+.flex {
+    display: flex;
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+.flex.column {
+    flex-direction: column;
+}
+
+.flex.space-between {
+    justify-content: space-between;
+}
+
+.flex.space-around {
+    justify-content: space-around;
+}
+
+.flex.space-even {
+    justify-content: space-evenly;
+}
+
+.flex.center {
+    justify-content: center;
+}
+
+/* COMPONENTS */
