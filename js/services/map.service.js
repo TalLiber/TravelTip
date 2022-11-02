@@ -1,9 +1,13 @@
+import { locService } from './loc.service.js'
+
 export const mapService = {
     initMap,
     addMarker,
     panTo,
-    goToUserLocation,
-    goToKeywordLocation
+    goToKeywordLocation,
+    centerMap,
+    goToLocation,
+    renderMarkers
 }
 
 const API_KEY = 'AIzaSyCbtnlyrtW4iXwODCftA7jSm_UMfPEu-cA'
@@ -28,9 +32,20 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function addMarker(loc) {
+function renderMarkers() {
+    const locations = locService.getLocs()
+    console.log(locations);
+    // locations.forEach(location => {
+    //     console.log(location);
+    // })
+}
+
+function addMarker(lat, lng) {
     var marker = new google.maps.Marker({
-        position: loc,
+        position: {
+            lat,
+            lng
+        },
         title: 'Hello World!'
     })
     marker.setMap(gMap)
@@ -41,18 +56,24 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 }
 
-function goToUserLocation(coords) {
-    gMap.setCenter(new google.maps.LatLng(coords.latitude, coords.longitude))
-    addMarker(coords)
+function centerMap(lat, lng) {
+    gMap.setCenter(new google.maps.LatLng(lat, lng))
+    console.log(lat,lng)
+    addMarker(lat, lng)
+}
+
+function goToLocation(id) {
+    const currLocation = locService.getLocById(id)
+    console.log(currLocation);
+    centerMap(currLocation.lat, currLocation.lng)
 }
 
 function goToKeywordLocation(place) {
     console.log(place)
-    let api = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=`
-    // AIzaSyCzZ1U0nG3bfA5VF6Fia8uQy19bPRjDMGU
+    let api = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key= AIzaSyCzZ1U0nG3bfA5VF6Fia8uQy19bPRjDMGU`
     return axios.get(api)
         .then((res) => {
-            console.log(res.data['results'][0]['geometry'])
+            // console.log(res.data['results'][0]['geometry'])
             return getRelevantData(res.data['results'])
         })
         .catch(err => console.log(err))
@@ -60,6 +81,7 @@ function goToKeywordLocation(place) {
 
 function getRelevantData(results) {
     const ans = results[0]['geometry']['location']
+    console.log(ans)
     return ans
 }
 

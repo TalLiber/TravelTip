@@ -19,7 +19,7 @@
     </div>
 
     <main class="main-content flex column">
-        <header class="main-header flex space-between">
+        <header class="main-header flex space-around">
             <h1>TravelTip</h1>
             <div class="sub-header-wrapper">
                 <form onsubmit="onSetLocationByInput(event)">
@@ -30,13 +30,13 @@
                 <button onclick="onGetUserPos()">My Location</button>
             </div>
         </header>
-        <section class="map-header flex space-between">
+        <section class="map-header flex space-around">
             <div>
-                <h2>Location:</h2><span></span>,<span></span>
+                <h2>Location:</h2><span></span><span></span>
             </div>
             <button>Copy Location </button>
         </section>
-        <section class="map-content-section flex wrap space-between">
+        <section class="map-content-section flex wrap space-around">
             <div class="locations-list flex column">
 
             </div>
