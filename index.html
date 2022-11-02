@@ -10,6 +10,14 @@
 
 <body class="main-layout">
 
+    <div class="map-modal none">
+        <form onsubmit="onSaveLocation(event)">
+            <input type="text" name="loc-name-input" placeholder="Enter Name">
+            <button>Keep</button>
+        </form>
+
+    </div>
+
     <main class="main-content flex column">
         <header class="main-header flex space-between">
             <h1>TravelTip</h1>
@@ -38,6 +46,7 @@
 
 
     </main>
+
 
 
 

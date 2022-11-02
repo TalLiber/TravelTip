@@ -6,6 +6,8 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onClickMap = onClickMap
+window.onSaveLocation = onSaveLocation
 
 function onInit() {
     mapService.initMap()
@@ -50,4 +52,21 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map')
     mapService.panTo(35.6895, 139.6917)
+}
+
+function onClickMap(ev, map) {
+    console.log(ev)
+    // const { offsetX, offsetY } = ev.domEvent
+    // console.log(offsetX, offsetY)
+    // ev.latLng the key for latLng
+
+}
+
+function onSaveLocation(ev) {
+    ev.preventDefault()
+    const elForm = ev.target
+    const formData = new FormData(elForm)
+    const name = Object.fromEntries(formData)['loc-name-input']
+    console.log(name)
+
 }
