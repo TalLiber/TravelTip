@@ -10,6 +10,7 @@ window.onClickMap = onClickMap
 window.onSaveLocation = onSaveLocation
 window.onRemoveLocation = onRemoveLocation
 window.onGoToLocation = onGoToLocation
+window.onSetLocationByInput = onSetLocationByInput
 
 function onInit() {
     mapService.initMap()
@@ -91,12 +92,17 @@ function onSaveLocation(ev) {
     const name = Object.fromEntries(formData)['loc-name-input']
     const elInput = elForm.querySelector('input')
 
-    return {
-        name,
-        lat: +elInput.dataset.lat,
-        lng: +elInput.dataset.lng,
-        createdAt: Date.now()
-    }
+    locService.setLocation(name, +elInput.dataset.lat, +elInput.dataset.lng)
+}
+function onSetLocationByInput(ev) {
+    ev.preventDefault()
+    const elForm = ev.target
+    const formData = new FormData(elForm)
+    const place = Object.fromEntries(formData)['search-input']
+    // const locPrm =
+     mapService.goToKeywordLocation(place)
+
+
 }
 
 function placeModalByPos(x, y) {

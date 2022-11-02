@@ -13,13 +13,13 @@ var gLocs = storageService.load(KEY) || [
     { id: '234', name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
 
-function setLocation(name, lat, lng, createdAt) {
+function setLocation(name, lat, lng) {
     gLocs.push({
         id: _makeId(),
         name,
         lat,
         lng,
-        createdAt
+        createdAt:Date.now()
     })
 
     storageService.save(KEY, gLocs)

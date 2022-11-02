@@ -22,7 +22,7 @@
         <header class="main-header flex space-between">
             <h1>TravelTip</h1>
             <div class="sub-header-wrapper">
-                <form onsubmit="">
+                <form onsubmit="onSetLocationByInput(event)">
                     <input name="search-input" for="form" type="search" placeholder="Enter Location">
                     <button type="submit">Go</button>
                 </form>
@@ -61,6 +61,7 @@
     </p>
 
 
+    <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
 
