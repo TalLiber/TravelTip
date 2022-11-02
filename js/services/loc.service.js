@@ -1,10 +1,13 @@
+import { storageService } from './storage.service.js'
+
 export const locService = {
     getLocs,
     setLocation
 }
 
+const KEY = 'travelTipDB'
 
-var gLocs = [
+var gLocs = storageService.load(KEY) || [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
     { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
@@ -17,16 +20,17 @@ function setLocation(name, lat, lng, createdAt) {
         lng,
         createdAt
     })
+
+    storageService.save(KEY, gLocs)
 }
 
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(locs)
+            resolve(gLocs)
         }, 2000)
     })
 }
-
 
 function _makeId(length = 6) {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

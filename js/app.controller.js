@@ -32,7 +32,13 @@ function onGetLocs() {
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+            const strHTMLs = locs.map(loc => `
+                <article class="location-container">
+                    <div>${loc.name}</div>
+                    <small>TODO: add createdAt here</small>
+                </article>
+            `).join('')
+            document.querySelector('.locations-list').innerHTML = strHTMLs
         })
 }
 
