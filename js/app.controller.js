@@ -38,7 +38,7 @@ function onAddMarker() {
 function renderLocs() {
     locService.getLocs()
         .then(locs => {
-            console.log('Locations:', locs)
+            // console.log('Locations:', locs)
             const strHTMLs = locs.map(loc => `
                 <article class="location-container">
                     <div>${loc.name}</div>

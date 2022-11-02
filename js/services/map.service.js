@@ -33,11 +33,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function renderMarkers() {
-    const locations = locService.getLocs()
-    console.log(locations);
-    // locations.forEach(location => {
-    //     console.log(location);
-    // })
+    locService.getLocs()
+        .then(locs => {
+            // console.log('Locations:', locs)
+            locs.forEach(location => {
+                addMarker(location.lat, location.lng)
+            })
+        })
+
 }
 
 function addMarker(lat, lng) {
