@@ -3,7 +3,8 @@ import { storageService } from './storage.service.js'
 export const locService = {
     getLocs,
     setLocation,
-    removeLocation
+    removeLocation,
+    getLocById
 }
 
 const KEY = 'travelTipDB'
@@ -19,7 +20,7 @@ function setLocation(name, lat, lng, createdAt) {
         name,
         lat,
         lng,
-        createdAt
+        createdAt: Date.now()
     })
 
     storageService.save(KEY, gLocs)
@@ -37,6 +38,10 @@ function getLocs() {
             resolve(gLocs)
         }, 2000)
     })
+}
+
+function getLocById(id) {
+    return gLocs.find(loc => loc.id === id)
 }
 
 function _makeId(length = 6) {

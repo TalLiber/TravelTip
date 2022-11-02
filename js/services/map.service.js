@@ -1,8 +1,12 @@
+import { locService } from './loc.service.js'
+
 export const mapService = {
     initMap,
     addMarker,
     panTo,
-    goToUserLocation
+    centerMap,
+    goToLocation,
+    renderMarkers
 }
 
 
@@ -15,19 +19,30 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available')
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
+                    center: { lat, lng },
+                    zoom: 15
+                })
             gMap.addListener('click', (ev) => {
-            
-                onClickMap(ev,gMap)
+
+                onClickMap(ev, gMap)
             })
         })
 }
 
-function addMarker(loc) {
+function renderMarkers() {
+    const locations = locService.getLocs()
+    console.log(locations);
+    // locations.forEach(location => {
+    //     console.log(location);
+    // })
+}
+
+function addMarker(lat, lng) {
     var marker = new google.maps.Marker({
-        position: loc,
+        position: {
+            lat,
+            lng
+        },
         title: 'Hello World!'
     })
     marker.setMap(gMap)
@@ -38,10 +53,15 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 }
 
-function goToUserLocation(coords) {
-    gMap.setCenter(new google.maps.LatLng(coords.latitude, coords.longitude))
-    console.log(coords);
-    addMarker(coords)
+function centerMap(lat, lng) {
+    gMap.setCenter(new google.maps.LatLng(lat, lng))
+    addMarker(lat, lng)
+}
+
+function goToLocation(id) {
+    const currLocation = locService.getLocById(id)
+    console.log(currLocation);
+    centerMap(currLocation.lat, currLocation.lng)
 }
 
 function _connectGoogleApi() {

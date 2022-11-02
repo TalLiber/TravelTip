@@ -16,6 +16,7 @@ function onInit() {
         .then(() => {
             console.log('Map is ready')
             renderLocs()
+            mapService.renderMarkers()
         })
         .catch(() => console.log('Error: cannot init map'))
 }
@@ -53,7 +54,7 @@ function onGetUserPos() {
     getPosition()
         .then(pos => {
             console.log('User position is:', pos.coords)
-            mapService.goToUserLocation(pos.coords)
+            mapService.centerMap(pos.coords.latitude, pos.coords.longitude)
         })
         .catch(err => {
             console.log('err!!!', err)
@@ -66,7 +67,7 @@ function onRemoveLocation(id) {
 }
 
 function onGoToLocation(id) {
-    mapService.goToLocation(is)
+    mapService.goToLocation(id)
 }
 
 function onPanTo() {
@@ -76,8 +77,8 @@ function onPanTo() {
 
 function onClickMap(ev, map) {
     const elInput = document.querySelector('.name-form input')
-    elInput.dataset.lat = + ev.latLng.lat()
-    elInput.dataset.lng = + ev.latLng.lng()
+    elInput.dataset.lat = +ev.latLng.lat()
+    elInput.dataset.lng = +ev.latLng.lng()
 
     const { offsetX, offsetY } = ev.domEvent
     placeModalByPos(offsetX, offsetY)
@@ -91,12 +92,8 @@ function onSaveLocation(ev) {
     const name = Object.fromEntries(formData)['loc-name-input']
     const elInput = elForm.querySelector('input')
 
-    return {
-        name,
-        lat: +elInput.dataset.lat,
-        lng: +elInput.dataset.lng,
-        createdAt: Date.now()
-    }
+    locService.setLocation(name, +elInput.dataset.lat, +elInput.dataset.lng)
+    renderLocs()
 }
 
 function placeModalByPos(x, y) {
