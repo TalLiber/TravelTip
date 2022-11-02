@@ -27,7 +27,7 @@
                     <button type="submit">Go</button>
                 </form>
 
-                <button>My Location</button>
+                <button onclick="onGetUserPos()">My Location</button>
             </div>
         </header>
         <section class="map-header flex space-between">
@@ -41,7 +41,6 @@
 
             </div>
             <div id="map" style="width: 50%; height: 300px;"></div>
-
         </section>
 
 
@@ -58,7 +57,7 @@
 
     <p>You are at: <span class="user-pos"></span></p>
     <p>Locations:
-    <pre class="locs"></pre>
+        <pre class="locs"></pre>
     </p>
 
 
