@@ -62,18 +62,34 @@ function onPanTo() {
 }
 
 function onClickMap(ev, map) {
-    console.log(ev)
-    // const { offsetX, offsetY } = ev.domEvent
-    // console.log(offsetX, offsetY)
-    // ev.latLng the key for latLng
+    const elInput = document.querySelector('.name-form input')
+    elInput.dataset.lat = + ev.latLng.lat()
+    elInput.dataset.lng = + ev.latLng.lng()
 
+    const { offsetX, offsetY } = ev.domEvent
+    placeModalByPos(offsetX, offsetY)
 }
 
 function onSaveLocation(ev) {
     ev.preventDefault()
+    document.querySelector('.map-modal').hidden = true
     const elForm = ev.target
     const formData = new FormData(elForm)
     const name = Object.fromEntries(formData)['loc-name-input']
-    console.log(name)
+    const elInput = elForm.querySelector('input')
+
+    return {
+        name,
+        lat: +elInput.dataset.lat,
+        lng: +elInput.dataset.lng,
+        createdAt: Date.now()
+    }
+}
+
+function placeModalByPos(x, y) {
+    const elModal = document.querySelector('.map-modal')
+    elModal.hidden = false
+    elModal.style.left = x + 'px';
+    elModal.style.top = y + 'px';
 
 }

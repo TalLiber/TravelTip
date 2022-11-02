@@ -10,8 +10,8 @@
 
 <body class="main-layout">
 
-    <div class="map-modal none">
-        <form onsubmit="onSaveLocation(event)">
+    <div class="map-modal" hidden>
+        <form class="name-form flex column space-around" onsubmit="onSaveLocation(event)">
             <input type="text" name="loc-name-input" placeholder="Enter Name">
             <button>Keep</button>
         </form>
