@@ -9,10 +9,7 @@ export const locService = {
 
 const KEY = 'travelTipDB'
 
-var gLocs = storageService.load(KEY) || [
-    { id: '123', name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
-    { id: '234', name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
+var gLocs = storageService.load(KEY).length ? storageService.load(KEY) : []
 
 function setLocation(name, lat, lng) {
     gLocs.push({

@@ -22,14 +22,38 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available')
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
+                    center: { lat, lng },
+                    zoom: 15
+                })
 
             gMap.addListener('click', (ev) => {
-                onClickMap(ev, gMap)
+                // onClickMap(ev, gMap)
+                openModalToMap(ev)
+
             })
         })
+}
+
+function openModalToMap(ev) {
+    const contentString = `
+<div class="modal">
+    <h1>Good Morning Arnon</h1>
+</div>`
+
+
+    console.log(ev);
+    const pos = {
+        lat: ev.latLng.lat(),
+        lng: ev.latLng.lng()
+    }
+
+    const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        position: pos,
+
+    });
+
+    infowindow.open(gMap)
 }
 
 function renderMarkers() {
@@ -61,13 +85,11 @@ function panTo(lat, lng) {
 
 function centerMap(lat, lng) {
     gMap.setCenter(new google.maps.LatLng(lat, lng))
-    console.log(lat,lng)
     addMarker(lat, lng)
 }
 
 function goToLocation(id) {
     const currLocation = locService.getLocById(id)
-    console.log(currLocation);
     centerMap(currLocation.lat, currLocation.lng)
 }
 
@@ -83,9 +105,7 @@ function goToKeywordLocation(place) {
 }
 
 function getRelevantData(results) {
-    const ans = results[0]['geometry']['location']
-    console.log(ans)
-    return ans
+    return results[0]['geometry']['location']
 }
 
 function _connectGoogleApi() {
